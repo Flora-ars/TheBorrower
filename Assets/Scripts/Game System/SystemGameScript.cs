@@ -36,7 +36,7 @@ public class SystemGameScript : MonoBehaviour
         }
 
         if (target.gameObject.tag == Statement.lose || 
-            target.gameObject.tag == GameState.enemy)
+            target.gameObject.tag == GameCharcter.enemy)
         {
             GameOver.SetActive(true);
 
