@@ -9,7 +9,16 @@ using UnityEngine;
         public const string lose = "Lose";
     }
 
-    public class GameState
+    public class GameCharcter
     {
     public const string enemy = "Enemy";
     }
+
+
+    public class Collector
+    {
+    public const string itemCollect = "Collectable";
+    }
+
+
+
