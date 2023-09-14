@@ -707,7 +707,6 @@ GameObject:
   - component: {fileID: 1096228560}
   - component: {fileID: 1096228565}
   - component: {fileID: 1096228564}
-  - component: {fileID: 1096228566}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -844,21 +843,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTransform: {fileID: 1096228563}
-  gradesMultiply: 0
-  speed: 5
-  myRb: {fileID: 1096228564}
---- !u!114 &1096228566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1096228559}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 45395ebf85b4dbe46b1e81eef2608001, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  gradesMultiply: 5
+  movementSpeed: 5
 --- !u!1 &1340851393
 GameObject:
   m_ObjectHideFlags: 0
