@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using System.Collections;
 using System.Collections.Generic;
@@ -11,38 +12,47 @@ public class CollectionCounter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StrawberryCounterText;
     [SerializeField] private TextMeshProUGUI MushroomCounterText;
     [SerializeField] private TextMeshProUGUI AcornCounterText;
+    [SerializeField] private AudioClip collecting;///
+    private GameObject _collectSound;
+    private AudioSource audioSourceCollectSound;///
 
-    void Start() //funciona
+    public bool isCollected=false;
+
+    void Start()
     {
-        StrawberryCounterText.text = " " + counterStrawberry; 
+        StrawberryCounterText.text = " " + counterStrawberry;
         MushroomCounterText.text = " " + counterMushroom;
-        AcornCounterText.text = " " + counterAcorn;
+        AcornCounterText.text = " " + counterMushroom;
+        _collectSound = GameObject.Find("CollectSound");///////
+        audioSourceCollectSound = _collectSound.GetComponent<AudioSource>(); ///
     }
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Strawberry"))
+        if (other.CompareTag("Strawberry") || other.CompareTag("Mushroom") || other.CompareTag("Acorn"))
         {
+            isCollected = true;
             Destroy(other.gameObject);
-            counterStrawberry--;
-            StrawberryCounterText.text = " " + counterStrawberry;
-            Debug.Log("counterStrawberry");
+            audioSourceCollectSound.PlayOneShot(collecting, .8f); /////////////
+            if (other.CompareTag("Strawberry"))
+            {
+                counterStrawberry--;
+                StrawberryCounterText.text = " " + counterStrawberry;
+                Debug.Log("counterStrawberry");
+            }
+            else if (other.CompareTag("Mushroom"))
+            {
+                counterMushroom--;
+                MushroomCounterText.text = " " + counterMushroom;
+                Debug.Log("counterMushroom");
+            }
+            else if (other.CompareTag("Acorn"))
+            {
+                counterAcorn--;
+                AcornCounterText.text = " " + counterAcorn;
+                Debug.Log("counterAcorn");
+            }
         }
-        if (other.CompareTag("Mushroom"))
-        {
-            Destroy(other.gameObject);
-            counterMushroom--;
-            MushroomCounterText.text = " " + counterMushroom;
-            Debug.Log("counterMushroom");
-        }
-        if (other.CompareTag("Acorn")) 
-        {
-            Destroy(other.gameObject);
-            counterAcorn--;
-            AcornCounterText.text = " " + counterAcorn;
-            Debug.Log("counterAcorn");
-        }
-
     }
-
 }
+
