@@ -20,7 +20,7 @@ public class CollectionCounter : MonoBehaviour
     {
         StrawberryCounterText.text = " " + counterStrawberry; 
         MushroomCounterText.text = " " + counterMushroom;
-        AcornCounterText.text = " " + counterMushroom;
+        AcornCounterText.text = " " + counterAcorn;
     }
 
     private void Update()
