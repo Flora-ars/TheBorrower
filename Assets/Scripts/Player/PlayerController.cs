@@ -1,48 +1,81 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Rigidbody))]
+
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] Transform playerTransform;
-    Transform objectiveToScale;
-    [SerializeField] float gradesMultiply;
-    float movX, movZ;
-    [SerializeField] float speed;
-    [SerializeField] Rigidbody myRb;
-    Vector3 moveInput;
-    Quaternion rotateInput;
+    // movement var
+    [SerializeField] float movementSpeed = 3;
+    [SerializeField] private float turnSpeed = 50;
+    private Rigidbody myRb;
+
+    //animation var
+    private Animator _animator;
+    private const string SPEED_F = "Speed_f";
+    private float valueSpeedF = 0.01f;
+    private const string STATIC_B = "Static_b";
+    private bool isStatic = true;
+
 
     void Start()
     {
-        playerTransform = GetComponent<Transform>();
         myRb = GetComponent<Rigidbody>();
+        _animator = GetComponent<Animator>();
+        _animator.SetFloat(SPEED_F, valueSpeedF);
+        _animator.SetBool(STATIC_B, isStatic);
     }
 
-    // Update is called once per frame
-    void Update()
+    private void Update()
     {
-        movX = Input.GetAxis("Horizontal");
-        movZ = Input.GetAxis("Vertical");
-
+        AnimationPlayer();
     }
+
     private void FixedUpdate()
     {
-
-        if (Input.GetButton("Horizontal") || Input.GetButton("Vertical"))
-        {
-            ControlMovement();
-        }
-
+        ControlMovement();
     }
     void ControlMovement()
     {
-        moveInput = new Vector3(movX, moveInput.y, movZ);
-        Vector3 directionToMove = myRb.rotation * moveInput;
-        rotateInput = Quaternion.Euler(rotateInput.x, movX * gradesMultiply, rotateInput.z);
 
-        myRb.MovePosition(myRb.position + directionToMove * speed * Time.fixedDeltaTime);
-        myRb.MoveRotation(myRb.rotation * rotateInput);
+        float horizontalInput = Input.GetAxis("Horizontal");
+        float verticalInput = Input.GetAxis("Vertical");
+
+        Vector3 moveDirection = new Vector3(horizontalInput, 0, verticalInput);
+        myRb.velocity = moveDirection * movementSpeed;
+
+        if (moveDirection != Vector3.zero)
+        {
+            Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, turnSpeed);
+        }
+
+        /*float rotationAngle = (turnSpeed * horizontalInput * Time.deltaTime);
+        Vector3 rotateDirection = Vector3.up * rotationAngle;
         
+        transform.rotation = Quaternion.LookRotation(moveDirection) * Quaternion.Euler(rotateDirection);*/
+
+    }
+
+    void AnimationPlayer()
+    {
+        if (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow)
+            || Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow))
+        {
+            valueSpeedF = 1.0f;
+            _animator.SetFloat(SPEED_F, valueSpeedF);
+            isStatic = false;
+            _animator.SetBool(STATIC_B, isStatic);
+        }
+        else
+        {
+            valueSpeedF = 0.01f;
+            _animator.SetFloat(SPEED_F, valueSpeedF);
+            isStatic = true;
+            _animator.SetBool(STATIC_B, isStatic);
+        }
     }
 }
+

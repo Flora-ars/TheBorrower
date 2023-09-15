@@ -9,12 +9,7 @@ public class SoundManager : MonoBehaviour
     //audio var player
     private AudioSource audioSourcePlayer;
     [SerializeField] private AudioClip footSteps;
-    [SerializeField] private AudioClip collecting;
-    [SerializeField] private GameObject _player;
-    private CollectionCounter _counter;
-    private bool checkIsCollected;
-    [SerializeField] private GameObject _collectSound;
-    private AudioSource audioSourceCollectSound;
+    private GameObject _player;
 
     //audio var enviroment
     private AudioSource soundManager;
@@ -24,11 +19,8 @@ public class SoundManager : MonoBehaviour
 
     void Start()
     {
-        //_player = GameObject.Find("Character_Tody");
+        _player = GameObject.Find("Character_Tody");
         audioSourcePlayer = _player.GetComponent<AudioSource>();
-        _counter = _player.GetComponent<CollectionCounter>();
-        //_collectSound = GameObject.Find("CollectSound");
-        audioSourceCollectSound = _collectSound.GetComponent<AudioSource>();
 
 
         soundManager = GetComponent<AudioSource>();
@@ -40,8 +32,8 @@ public class SoundManager : MonoBehaviour
     }
     private void Update()
     {
-        checkIsCollected = _counter.isCollected;
         ActiveSoundEffects();
+
     }
 
     void ActiveSoundEffects()
@@ -59,7 +51,7 @@ public class SoundManager : MonoBehaviour
                 audioSourcePlayer.clip = footSteps;
                 audioSourcePlayer.loop = true;
                 audioSourcePlayer.priority = 128;
-                audioSourcePlayer.volume = .5f;
+                audioSourcePlayer.volume = 1f;
                 audioSourcePlayer.pitch = -1.2f;
                 audioSourcePlayer.spatialBlend = .8f;
                 audioSourcePlayer.Play();
@@ -69,20 +61,6 @@ public class SoundManager : MonoBehaviour
         {
             audioSourcePlayer.Stop();
         }
-
-        if (checkIsCollected == true)
-        {
-            if (!audioSourceCollectSound.isPlaying)
-            {
-                audioSourceCollectSound.PlayOneShot(collecting, .8f);
-            }
-            /*audioSourceCollectSoud.clip = collecting;
-            audioSourceCollectSoud.loop = false;
-            audioSourceCollectSoud.volume = .8f;
-            audioSourceCollectSoud.Play();*/
-
-
-        }
-
     }
+
 }
