@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,7 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
     // movement var
-    [SerializeField] float movementSpeed = 5;
+    [SerializeField] float movementSpeed = 3;
     [SerializeField] private float turnSpeed = 50;
     private Rigidbody myRb;
 
@@ -17,7 +18,7 @@ public class PlayerController : MonoBehaviour
     private float valueSpeedF = 0.01f;
     private const string STATIC_B = "Static_b";
     private bool isStatic = true;
-   
+    
 
     void Start()
     {
@@ -27,12 +28,14 @@ public class PlayerController : MonoBehaviour
         _animator.SetBool(STATIC_B, isStatic);
     }
 
-   
+    private void Update()
+    {
+        AnimationPlayer();
+    }
+
     private void FixedUpdate()
     {
        ControlMovement();
-       AnimationPlayer();
-
     }
     void ControlMovement()
     {
@@ -48,6 +51,7 @@ public class PlayerController : MonoBehaviour
             Quaternion rotateDirection = Quaternion.LookRotation(moveDirection, Vector3.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, rotateDirection, turnSpeed);
         }
+        
         /*float rotationAngle = (turnSpeed * horizontalInput * Time.deltaTime);
         Vector3 rotateDirection = Vector3.up * rotationAngle;
         
