@@ -11,38 +11,48 @@ public class CollectionCounter : MonoBehaviour
     [SerializeField] private TextMeshProUGUI StrawberryCounterText;
     [SerializeField] private TextMeshProUGUI MushroomCounterText;
     [SerializeField] private TextMeshProUGUI AcornCounterText;
-
+    public bool isCollected;
     void Start() //funciona
     {
         StrawberryCounterText.text = " " + counterStrawberry; 
         MushroomCounterText.text = " " + counterMushroom;
         AcornCounterText.text = " " + counterAcorn;
     }
+    void update()
+    {
+        isCollected = false;
+    }
 
     void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Strawberry"))
         {
+            isCollected = true;
             Destroy(other.gameObject);
             counterStrawberry--;
             StrawberryCounterText.text = " " + counterStrawberry;
             Debug.Log("counterStrawberry");
         }
-        if (other.CompareTag("Mushroom"))
+        else if (other.CompareTag("Mushroom"))
         {
+            isCollected = true;
             Destroy(other.gameObject);
             counterMushroom--;
             MushroomCounterText.text = " " + counterMushroom;
             Debug.Log("counterMushroom");
         }
-        if (other.CompareTag("Acorn")) 
+        else if (other.CompareTag("Acorn")) 
         {
+            isCollected = true;
             Destroy(other.gameObject);
             counterAcorn--;
             AcornCounterText.text = " " + counterAcorn;
             Debug.Log("counterAcorn");
         }
-
+        else
+        {
+            isCollected = false;
+        }
     }
 
 }
