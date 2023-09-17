@@ -6,16 +6,20 @@ using UnityEngine;
 
 public class CollectionCounter : MonoBehaviour
 {
-    private int counterStrawberry = 6;
-    private int counterMushroom = 7;
-    private int counterAcorn = 6;
+    private int counterStrawberry = 8;
+    private int counterMushroom = 8;
+    private int counterAcorn = 7;
     [SerializeField] private TextMeshProUGUI StrawberryCounterText;
     [SerializeField] private TextMeshProUGUI MushroomCounterText;
     [SerializeField] private TextMeshProUGUI AcornCounterText;
-    [SerializeField] private AudioClip collecting;///
+    [SerializeField] private AudioClip collecting;
     private GameObject _collectSound;
-    private AudioSource audioSourceCollectSound;///
+    private AudioSource audioSourceCollectSound;
 
+    ///
+
+    private int quantityObjects;
+    public bool quantityZero;
     public bool isCollected=false;
 
     void Start()
@@ -24,8 +28,16 @@ public class CollectionCounter : MonoBehaviour
         MushroomCounterText.text = " " + counterMushroom;
         AcornCounterText.text = " " + counterMushroom;
         _collectSound = GameObject.Find("CollectSound");///////
-        audioSourceCollectSound = _collectSound.GetComponent<AudioSource>(); ///
+        audioSourceCollectSound = _collectSound.GetComponent<AudioSource>();
+
+        quantityZero = false;
     }
+
+    private void Update()
+    {
+        CounterObjects();
+    }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -52,6 +64,19 @@ public class CollectionCounter : MonoBehaviour
                 AcornCounterText.text = " " + counterAcorn;
                 Debug.Log("counterAcorn");
             }
+        }
+    }
+
+    void CounterObjects()
+    {
+        quantityObjects = counterMushroom + counterAcorn + counterStrawberry;
+        if (quantityObjects == 0)
+        {
+            quantityZero = true;
+        }
+        else
+        {
+            quantityZero = false;
         }
     }
 }

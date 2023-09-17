@@ -9,4 +9,15 @@ public class GameManager : MonoBehaviour
     {
         SceneManager.LoadScene("Garden");
     }
+
+    public void BackMenu()
+    {
+        SceneManager.LoadScene("HomeScene");
+    }
+
+    public void RestartGame()
+    {
+        Time.timeScale = 1.0f;
+        SceneManager.LoadSceneAsync("Garden", LoadSceneMode.Single);
+    }
 }
