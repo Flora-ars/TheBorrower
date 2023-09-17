@@ -19,6 +19,8 @@ public class PlayerController : MonoBehaviour
     private const string STATIC_B = "Static_b";
     private bool isStatic = true;
 
+    public GameObject _alert;
+
 
     void Start()
     {
@@ -76,6 +78,16 @@ public class PlayerController : MonoBehaviour
             isStatic = true;
             _animator.SetBool(STATIC_B, isStatic);
         }
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.gameObject.CompareTag("Trap"))
+        {
+            _alert.SetActive(true);
+            Time.timeScale = 0;
+        }
+      
     }
 }
 
